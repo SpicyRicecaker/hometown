@@ -1,64 +1,18 @@
-# svelte app
+# Hometown
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template-webpack.
+POV: You are at home, the rain is pouring outside, but you chillin' inside, reading a really good book.
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+Thanks to [Sainhe](https://github.com/sainnhe/gruvbox-material) for making the beautiful Gruvbox Material theme!
 
-```bash
-npx degit sveltejs/template-webpack svelte-app
-cd svelte-app
-```
+## TODO
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
-
-
-## Get started
-
-Install the dependencies...
-
-```bash
-cd svelte-app
-npm install
-```
-
-...then start webpack:
-
-```bash
-npm run dev
-```
-
-Navigate to [localhost:8080](http://localhost:8080). You should see your app running. Edit a component file in `src`, save it, and the page should reload with your changes.
-
-
-## Deploying to the web
-
-### With [now](https://zeit.co/now)
-
-Install `now` if you haven't already:
-
-```bash
-npm install -g now
-```
-
-Then, from within your project folder:
-
-```bash
-now
-```
-
-As an alternative, use the [Now desktop client](https://zeit.co/download) and simply drag the unzipped project folder to the taskbar icon.
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public
-```
+- [ ] Sublinks for major links
+  - Animated moving up to halfway in the opposite direction of the major grid
+- [ ] Easy way to add more links
+  - "Edit" mode
+- [ ] Some way to store links
+  - IndexedDB
+- [ ] RAIN
+  - Rain via canvas + rust wasm
+- Snap scroll multiple pages?
+  - Snap up for search engines, snap down for music
