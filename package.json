@@ -25,6 +25,5 @@
     "dev": "rimraf dist pkg && webpack serve --content-base public",
     "validate": "svelte-check",
     "test": "cargo test && wasm-pack test --headless"
-
   }
 }
