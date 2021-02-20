@@ -6,11 +6,11 @@
   "description": "Grid-based customizable homepage extension, with rain.",
   "homepage_url": "https://github.com/SpicyRicecaker",
   "icons": {
-    "48": "public/favicon.png"
+    "48": "public/favicon.svg"
   },
   "browser_action": {
     "default_title": "Home",
-    "default_icon": "public/favicon.png"
+    "default_icon": "public/favicon.svg"
   },
   "background": {
     "scripts": ["background.js"],
@@ -18,6 +18,11 @@
   },
   "chrome_url_overrides": {
     "newtab": "public/index.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@hometown"
+    }
   },
   "permissions": []
 }

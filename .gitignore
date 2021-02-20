@@ -10,3 +10,4 @@ yarn.lock
 /public/build
 /public/*.wasm
 /public/*.js
+/web-ext-artifacts

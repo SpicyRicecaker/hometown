@@ -16,3 +16,7 @@ Thanks to [Sainhe](https://github.com/sainnhe/gruvbox-material) for making the b
   - Rain via canvas + rust wasm
 - Snap scroll multiple pages?
   - Snap up for search engines, snap down for music
+
+## Attributions
+
+<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

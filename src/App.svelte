@@ -1,31 +1,61 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  let links = [
-    { description: 'phys', url: 'https://bsd.instructure.com/courses/85348' },
-    { description: 'bio', url: 'https://bsd.instructure.com/courses/85335' },
-    { description: 'lit', url: 'https://bsd.instructure.com/courses/85401' },
-    { description: 'tiktok', url: 'https://bsd.instructure.com/courses/85352' },
+  let pages = [
+    {
+      description: 'school',
+      links: [
+        {
+          description: 'phys',
+          url: 'https://bsd.instructure.com/courses/85348',
+        },
+        {
+          description: 'bio',
+          url: 'https://bsd.instructure.com/courses/85335',
+        },
+        {
+          description: 'lit',
+          url: 'https://bsd.instructure.com/courses/85401',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'tools',
+      links: [
+        {
+          description: 'desmos',
+          url: 'https://www.desmos.com/calculator',
+        },
+      ],
+    },
   ];
 
   const openLink = (url: string) => {
-    window.open(url);
+    window.location.href = url;
   };
 
   onMount(async () => {});
 </script>
 
 <main>
-  {#each links as link}
-    <div
-      class="topic"
-      on:click={() => {
-        openLink(link.url);
-      }}
-    >
-      <div class="description">
-        {link.description}
-      </div>
+  {#each pages as page}
+    <div class="pages">
+      {#each page.links as link}
+        <div
+          class="links"
+          on:click={() => {
+            openLink(link.url);
+          }}
+        >
+          <div class="description">
+            {link.description}
+          </div>
+        </div>
+      {/each}
     </div>
   {/each}
 </main>
@@ -36,30 +66,27 @@
     padding: 0;
   }
   main {
+    width: 100%;
+    height: 100%;
+
+    scroll-snap-type: y mandatory;
+    overflow-y: auto;
+  }
+
+  .pages {
     background-color: #292828;
     color: #d4be98;
+
+    display: grid;
+    grid-auto-flow: column;
 
     width: 100%;
     height: 100%;
 
-    display: grid;
-    // grid-template-columns: repeat(minmax(0, 1fr), minmax(0, 1fr), minmax(0, 1fr), minmax(0, 1fr));
-    // grid-template-columns: 1fr 1fr 1fr 1fr;
-    // grid-template-columns:repeat(1fr);
-    // grid-template-rows: repeat(1fr);
-    // grid-auto-columns: max-content;
-    grid-auto-flow: column;
-
-    // display: flex;
-    // flex-direction: row;
-
-    // flex: 1;
-    // justify-content: stretch;
-    // align-content: stretch;
-    // background-color: aqua;
+    scroll-snap-align: end;
   }
 
-  .topic {
+  .links {
     // align-self: center;
     // justify-self: center;
     transition: 300ms;
@@ -67,7 +94,7 @@
     &:hover {
       background-color: #d4be98;
       color: #292828;
-      cursor: cell;
+      cursor: pointer;
     }
 
     & .description {
@@ -76,13 +103,6 @@
       justify-self: center;
     }
   }
-
-  // h1 {
-  //   color: #ff3e00;
-  //   text-transform: uppercase;
-  //   font-size: 4em;
-  //   font-weight: 100;
-  // }
 
   @media (min-width: 640px) {
     main {
