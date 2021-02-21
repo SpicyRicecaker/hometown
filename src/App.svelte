@@ -39,6 +39,11 @@
   };
 
   onMount(async () => {});
+  
+  const propScroll = (e: UIEvent) => {
+    e.preventDefault();
+    
+  }
 </script>
 
 <main>
@@ -58,6 +63,11 @@
       {/each}
     </div>
   {/each}
+  <div class="nav">
+    {#each pages as page, i}
+      <div on:scroll={(e) => propScroll(e)}></div>
+    {/each}
+  </div>
 </main>
 
 <style lang="scss">
@@ -66,11 +76,39 @@
     padding: 0;
   }
   main {
+    scrollbar-width: none;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
     width: 100%;
     height: 100%;
-
     scroll-snap-type: y mandatory;
     overflow-y: auto;
+  }
+
+  .nav {
+    // Align to right middle
+    position: fixed;
+    top: 0;
+    height: 100%;
+    right: .5rem;
+
+    // Compress content (circles) to mid
+    display: grid;
+    align-content: center;
+    // Have just a small gap in between
+    gap: 1rem;
+    pointer-events: none;
+    & * {
+      pointer-events: auto;
+      display: block;
+      background-color: #7c6f64;
+      padding: .5rem;
+      align-self: center;
+      justify-self: center;
+      border-radius: 100%;
+    }
   }
 
   .pages {

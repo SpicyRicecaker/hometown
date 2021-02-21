@@ -2,7 +2,6 @@
 
 POV: You are at home, the rain is pouring outside, but you chillin' inside, reading a really good book.
 
-Thanks to [Sainhe](https://github.com/sainnhe/gruvbox-material) for making the beautiful Gruvbox Material theme!
 
 ## TODO
 
@@ -18,5 +17,7 @@ Thanks to [Sainhe](https://github.com/sainnhe/gruvbox-material) for making the b
   - Snap up for search engines, snap down for music
 
 ## Attributions
+
+Thanks to [Sainhe](https://github.com/sainnhe/gruvbox-material) for making the beautiful Gruvbox Material theme!
 
 <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
