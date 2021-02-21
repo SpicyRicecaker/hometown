@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
+  import { onMount } from 'svelte';
   import { scrollable } from './scrollable';
 
   let pages = [
@@ -55,17 +55,20 @@
   let currentViewport = 1;
   let innerHeight = 0;
   let scrollY;
+  
+  $: {
+    scrollToViewport(currentViewport);
+  }
 
   const scrollToViewport = (i: number) => {
     window.scrollTo({
-      top: innerHeight*i,
-      behavior: "auto",
+      top: innerHeight * i,
+      behavior: 'smooth',
     });
   };
 
-  onMount(async () => {
-    await tick();
-    scrollToViewport(currentViewport);
+  onMount(() => {
+    scrollY = innerHeight * currentViewport;
   });
 </script>
 
@@ -90,8 +93,9 @@
 <div class="nav">
   {#each pages as _page, i}
     <div
+      class:selected={i === currentViewport}
       on:click={() => {
-        scrollToViewport(i);
+        currentViewport = i
       }}
     />
   {/each}
@@ -168,6 +172,10 @@
       align-self: center;
       justify-self: center;
     }
+  }
+
+  .selected {
+    background-color: #c18f41;
   }
 
   @media (min-width: 640px) {
