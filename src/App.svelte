@@ -1,7 +1,21 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
+  import { scrollable } from './scrollable';
 
   let pages = [
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
     {
       description: 'school',
       links: [
@@ -38,44 +52,56 @@
     window.location.href = url;
   };
 
-  onMount(async () => {});
-  
-  const propScroll = (e: UIEvent) => {
-    e.preventDefault();
-    
-  }
+  let currentViewport = 1;
+  let innerHeight = 0;
+  let scrollY;
+
+  const scrollToViewport = (i: number) => {
+    window.scrollTo({
+      top: innerHeight*i,
+      behavior: "auto",
+    });
+  };
+
+  onMount(async () => {
+    await tick();
+    scrollToViewport(currentViewport);
+  });
 </script>
 
-<main>
-  {#each pages as page}
-    <div class="pages">
-      {#each page.links as link}
-        <div
-          class="links"
-          on:click={() => {
-            openLink(link.url);
-          }}
-        >
-          <div class="description">
-            {link.description}
-          </div>
+<svelte:window bind:innerHeight bind:scrollY use:scrollable />
+
+{#each pages as page}
+  <div class="pages">
+    {#each page.links as link}
+      <div
+        class="links"
+        on:click={() => {
+          openLink(link.url);
+        }}
+      >
+        <div class="description">
+          {link.description}
         </div>
-      {/each}
-    </div>
-  {/each}
-  <div class="nav">
-    {#each pages as page, i}
-      <div on:scroll={(e) => propScroll(e)}></div>
+      </div>
     {/each}
   </div>
-</main>
+{/each}
+<div class="nav">
+  {#each pages as _page, i}
+    <div
+      on:click={() => {
+        scrollToViewport(i);
+      }}
+    />
+  {/each}
+</div>
 
 <style lang="scss">
-  :global(body) {
-    margin: 0;
-    padding: 0;
-  }
-  main {
+  :global(html) {
+    overflow: auto;
+    scroll-snap-type: y mandatory;
+
     scrollbar-width: none;
     ::-webkit-scrollbar {
       display: none;
@@ -83,8 +109,10 @@
 
     width: 100%;
     height: 100%;
-    scroll-snap-type: y mandatory;
-    overflow-y: auto;
+  }
+  :global(body) {
+    margin: 0;
+    padding: 0;
   }
 
   .nav {
@@ -92,7 +120,7 @@
     position: fixed;
     top: 0;
     height: 100%;
-    right: .5rem;
+    right: 0.5rem;
 
     // Compress content (circles) to mid
     display: grid;
@@ -104,7 +132,7 @@
       pointer-events: auto;
       display: block;
       background-color: #7c6f64;
-      padding: .5rem;
+      padding: 0.5rem;
       align-self: center;
       justify-self: center;
       border-radius: 100%;
@@ -143,7 +171,7 @@
   }
 
   @media (min-width: 640px) {
-    main {
+    :global(body) {
       max-width: none;
     }
   }
