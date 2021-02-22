@@ -1,135 +1,30 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
+  import { onMount } from 'svelte';
   import { scrollable } from './scrollable';
 
   let pages = [
     {
-      description: 'school2',
+      description: 'lang',
       links: [
         {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
+          description: 'edosguide',
+          url: 'https://sites.google.com/view/edoguide/home',
+          links: [],
         },
         {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
+          description: 'jisho',
+          url: 'https://jisho.org/',
+          links: [],
         },
         {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
+          description: 'sakubi',
+          url: 'https://sakubi.neocities.org/',
+          links: [],
         },
         {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-        {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-        {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-        {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-        {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-        {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-        {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-      ],
-    },
-    {
-      description: 'school2',
-      links: [
-        {
-          description: 'japanese',
-          url: 'https://bsd.instructure.com/courses/85352',
-        },
-        {
-          description: 'tiktok',
-          url: 'https://bsd.instructure.com/courses/85352',
+          description: 'mangadex',
+          url: 'https://mangadex.org/',
+          links: [],
         },
       ],
     },
@@ -139,18 +34,33 @@
         {
           description: 'phys',
           url: 'https://bsd.instructure.com/courses/85348',
+          links: [
+            {
+              description: 'college physics',
+              url:
+                'https://openstax.org/books/college-physics/pages/1-introduction-to-science-and-the-realm-of-physics-physical-quantities-and-units',
+            },
+          ],
         },
         {
           description: 'bio',
           url: 'https://bsd.instructure.com/courses/85335',
+          links: [
+            {
+              description: 'biology 2e',
+              url: 'https://openstax.org/books/biology-2e/pages/1-introduction',
+            },
+          ],
         },
         {
           description: 'lit',
           url: 'https://bsd.instructure.com/courses/85401',
+          links: [],
         },
         {
           description: 'tiktok',
           url: 'https://bsd.instructure.com/courses/85352',
+          links: [],
         },
       ],
     },
@@ -160,6 +70,17 @@
         {
           description: 'desmos',
           url: 'https://www.desmos.com/calculator',
+          links: [],
+        },
+        {
+          description: 'songcloud',
+          url: 'https://soundcloud.com/pivot1',
+          links: [],
+        },
+        {
+          description: 'google',
+          url: 'https://www.google.com/',
+          links: [],
         },
       ],
     },
@@ -173,14 +94,11 @@
   let innerHeight = 0;
   let scrollY;
 
-  const scrollToViewport = async (i: number) => {
-    console.log("starting");
+  const scrollToViewport = (i: number) => {
     window.scrollTo({
       top: innerHeight * i,
       behavior: 'smooth',
     });
-    await tick();
-    console.log('done');
   };
 
   onMount(() => {
@@ -202,14 +120,20 @@
 {#each pages as page}
   <div class="pages">
     {#each page.links as link}
-      <div
-        class="links"
-        on:click={() => {
-          openLink(link.url);
-        }}
-      >
-        <div class="description">
-          {link.description}
+      <div class="links">
+        <a class="description" href={link.url}>
+          <div>
+            {link.description}
+          </div>
+        </a>
+        <div class="links">
+          {#each link.links as sublink}
+            <a class="description" href={sublink.url}
+              ><div>
+                {sublink.description}
+              </div></a
+            >
+          {/each}
         </div>
       </div>
     {/each}
@@ -259,6 +183,7 @@
     pointer-events: none;
     & * {
       pointer-events: auto;
+      // cursor: cell;
       display: block;
       background-color: #7c6f64;
       padding: 0.5rem;
@@ -284,23 +209,38 @@
   .links {
     // align-self: center;
     // justify-self: center;
-    transition: 300ms;
-    display: grid;
-    &:hover {
-      background-color: #d4be98;
-      color: #292828;
-      cursor: pointer;
-    }
+    display: flex;
+    flex-direction: column;
 
     & .description {
+      transition: 300ms;
+
       font-size: 2rem;
-      align-self: center;
-      justify-self: center;
+      &:hover {
+        background-color: #d4be98;
+        color: #292828;
+        cursor: pointer;
+      }
+      width: 100%;
+      height: 100%;
+
+      display: grid;
+      & * {
+        align-self: center;
+        justify-self: center;
+      }
     }
   }
 
   .selected {
     background-color: #c18f41;
+  }
+
+  a {
+    text-decoration: none;
+    color: #d4be98;
+    outline: none;
+    transition: 300ms;
   }
 
   @media (min-width: 640px) {

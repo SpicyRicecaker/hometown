@@ -4,7 +4,7 @@ Grid-based customizable homepage extension, with rain.
 
 > POV: You are at home, the rain is pouring outside, but you chillin' inside, reading a really good book.
 
-Preview the site @https://naughty-dijkstra-47fca6.netlify.app
+Preview the site @https://naughty-dijkstra-47fca6.netlify.app !
 
 ## TODO
 
