@@ -1,8 +1,125 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { scrollable } from './scrollable';
 
   let pages = [
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
     {
       description: 'school2',
       links: [
@@ -56,25 +173,23 @@
   let innerHeight = 0;
   let scrollY;
 
-  $: {
-    console.log(currentViewport);
-  }
-
   const scrollToViewport = async (i: number) => {
-    // window.scrollTo({
-    //   top: innerHeight * i,
-    //   behavior: 'smooth',
-    // });
-    scrollY = innerHeight * i;
+    console.log("starting");
+    window.scrollTo({
+      top: innerHeight * i,
+      behavior: 'smooth',
+    });
+    await tick();
+    console.log('done');
   };
 
   onMount(() => {
     scrollY = innerHeight * currentViewport;
   });
-  
+
   const handleScrollChange = (e) => {
     currentViewport = e.detail.newCurrentViewport;
-  }
+  };
 </script>
 
 <svelte:window
@@ -104,11 +219,8 @@
   {#each pages as _page, i}
     <div
       class:selected={i === currentViewport}
-      on:click={(e) => {
-        // e.stopPropagation();
-        e.stopImmediatePropagation();
+      on:click={(_e) => {
         scrollToViewport(i);
-        currentViewport = i;
       }}
     />
   {/each}
@@ -117,7 +229,7 @@
 <style lang="scss">
   :global(html) {
     overflow: auto;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
 
     scrollbar-width: none;
     ::-webkit-scrollbar {

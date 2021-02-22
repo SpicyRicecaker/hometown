@@ -18,7 +18,7 @@ export const scrollable = (node: any, currentViewport: number) => {
     );
   };
 
-  const throttleScroll = () => {
+  const throttleScroll = (e: UIEvent) => {
     lastKnownScrollPosition = window.scrollY;
 
     if (!ticking) {
