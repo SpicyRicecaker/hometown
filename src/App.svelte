@@ -1,8 +1,125 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { scrollable } from './scrollable';
 
   let pages = [
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
+    {
+      description: 'school2',
+      links: [
+        {
+          description: 'japanese',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+        {
+          description: 'tiktok',
+          url: 'https://bsd.instructure.com/courses/85352',
+        },
+      ],
+    },
     {
       description: 'school2',
       links: [
@@ -55,24 +172,32 @@
   let currentViewport = 1;
   let innerHeight = 0;
   let scrollY;
-  
-  $: {
-    scrollToViewport(currentViewport);
-  }
 
-  const scrollToViewport = (i: number) => {
+  const scrollToViewport = async (i: number) => {
+    console.log("starting");
     window.scrollTo({
       top: innerHeight * i,
       behavior: 'smooth',
     });
+    await tick();
+    console.log('done');
   };
 
   onMount(() => {
     scrollY = innerHeight * currentViewport;
   });
+
+  const handleScrollChange = (e) => {
+    currentViewport = e.detail.newCurrentViewport;
+  };
 </script>
 
-<svelte:window bind:innerHeight bind:scrollY use:scrollable />
+<svelte:window
+  bind:innerHeight
+  bind:scrollY
+  use:scrollable={currentViewport}
+  on:scrollchange={handleScrollChange}
+/>
 
 {#each pages as page}
   <div class="pages">
@@ -94,8 +219,8 @@
   {#each pages as _page, i}
     <div
       class:selected={i === currentViewport}
-      on:click={() => {
-        currentViewport = i
+      on:click={(_e) => {
+        scrollToViewport(i);
       }}
     />
   {/each}
@@ -104,7 +229,7 @@
 <style lang="scss">
   :global(html) {
     overflow: auto;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
 
     scrollbar-width: none;
     ::-webkit-scrollbar {
