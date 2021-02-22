@@ -56,32 +56,32 @@
   let innerHeight = 0;
   let scrollY;
 
-  // $: {
-  //   scrollToViewport(currentViewport);
-  // }
+  $: {
+    console.log(currentViewport);
+  }
 
-  const scrollToViewport = (i: number) => {
-    window.scrollTo({
-      top: innerHeight * i,
-      behavior: 'smooth',
-    });
+  const scrollToViewport = async (i: number) => {
+    // window.scrollTo({
+    //   top: innerHeight * i,
+    //   behavior: 'smooth',
+    // });
+    scrollY = innerHeight * i;
   };
 
   onMount(() => {
     scrollY = innerHeight * currentViewport;
   });
+  
+  const handleScrollChange = (e) => {
+    currentViewport = e.detail.newCurrentViewport;
+  }
 </script>
 
 <svelte:window
   bind:innerHeight
   bind:scrollY
   use:scrollable={currentViewport}
-  on:scrollup={() => {
-    currentViewport++;
-  }}
-  on:scrolldown={() => {
-    currentViewport--;
-  }}
+  on:scrollchange={handleScrollChange}
 />
 
 {#each pages as page}
@@ -105,7 +105,8 @@
     <div
       class:selected={i === currentViewport}
       on:click={(e) => {
-        e.stopPropagation();
+        // e.stopPropagation();
+        e.stopImmediatePropagation();
         scrollToViewport(i);
         currentViewport = i;
       }}

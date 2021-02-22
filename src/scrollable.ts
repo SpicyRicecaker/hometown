@@ -1,31 +1,21 @@
 export const scrollable = (node: any, currentViewport: number) => {
   let lastKnownScrollPosition = 0;
   let ticking = false;
-  let sensitivity = 200;
 
   const handleScroll = (lastKnownScrollPosition) => {
-    if (
-      Math.abs(lastKnownScrollPosition - currentViewport * window.innerHeight) +
-        sensitivity <
-      window.innerHeight
-    ) {
-      console.log(
-        Math.abs(
-          lastKnownScrollPosition - currentViewport * window.innerHeight
-        ),
-        window.innerHeight
-      );
+    const newCurrentViewport =
+      Math.round(lastKnownScrollPosition / window.innerHeight)
+    ;
+    if (newCurrentViewport === currentViewport) {
       return;
     }
 
     // scrollup = newscrolly - scrolly > 0
-    if (lastKnownScrollPosition - currentViewport * window.innerHeight > 0) {
-      node.dispatchEvent(new CustomEvent('scrollup'));
-    }
-    // scrolldown = newscrolly - scrolly < 0
-    else {
-      node.dispatchEvent(new CustomEvent('scrolldown'));
-    }
+    node.dispatchEvent(
+      new CustomEvent('scrollchange', {
+        detail: { newCurrentViewport },
+      })
+    );
   };
 
   const throttleScroll = () => {
@@ -41,14 +31,14 @@ export const scrollable = (node: any, currentViewport: number) => {
     }
   };
 
-  node.addEventListener('wheel', throttleScroll);
+  node.addEventListener('scroll', throttleScroll);
 
   return {
     update(newCurrentViewport: number) {
       currentViewport = newCurrentViewport;
     },
     destroy() {
-      node.removeEventListener('wheel', handleScroll);
+      node.removeEventListener('scroll', handleScroll);
     },
   };
 };
