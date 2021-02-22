@@ -55,10 +55,10 @@
   let currentViewport = 1;
   let innerHeight = 0;
   let scrollY;
-  
-  $: {
-    scrollToViewport(currentViewport);
-  }
+
+  // $: {
+  //   scrollToViewport(currentViewport);
+  // }
 
   const scrollToViewport = (i: number) => {
     window.scrollTo({
@@ -72,7 +72,17 @@
   });
 </script>
 
-<svelte:window bind:innerHeight bind:scrollY use:scrollable />
+<svelte:window
+  bind:innerHeight
+  bind:scrollY
+  use:scrollable={currentViewport}
+  on:scrollup={() => {
+    currentViewport++;
+  }}
+  on:scrolldown={() => {
+    currentViewport--;
+  }}
+/>
 
 {#each pages as page}
   <div class="pages">
@@ -94,8 +104,10 @@
   {#each pages as _page, i}
     <div
       class:selected={i === currentViewport}
-      on:click={() => {
-        currentViewport = i
+      on:click={(e) => {
+        e.stopPropagation();
+        scrollToViewport(i);
+        currentViewport = i;
       }}
     />
   {/each}
