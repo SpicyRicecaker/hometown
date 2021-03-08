@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { onMount } from 'svelte';
   import { scrollable } from './scrollable';
 
@@ -86,13 +86,16 @@
     },
   ];
 
-  const openLink = (url: string) => {
-    window.location.href = url;
+  // const openLink = (url: string) => {
+  //   window.location.href = url;
+  // };
+  const _functionThatIsNeverCalledForSWCTreeShakingPurposes = () => {
+    scrollable(1, 1);
   };
 
   let currentViewport = 1;
   let innerHeight = 0;
-  let scrollY;
+  let scrollY: number;
 
   const scrollToViewport = (i: number) => {
     window.scrollTo({
@@ -105,7 +108,7 @@
     scrollY = innerHeight * currentViewport;
   });
 
-  const handleScrollChange = (e) => {
+  const handleScrollChange = (e: any) => {
     currentViewport = e.detail.newCurrentViewport;
   };
 </script>
@@ -117,6 +120,7 @@
   on:scrollchange={handleScrollChange}
 />
 
+f
 {#each pages as page}
   <div class="pages">
     {#each page.links as link}
@@ -150,7 +154,7 @@
   {/each}
 </div>
 
-<style lang="scss">
+<style>
   :global(html) {
     overflow: auto;
     scroll-snap-type: y proximity;

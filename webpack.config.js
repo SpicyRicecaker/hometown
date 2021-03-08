@@ -6,6 +6,8 @@ const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin');
 
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
+// Import esbuild plugin for typescript
+const { transformSync } = require('@swc/core');
 
 module.exports = {
   entry: {
@@ -25,9 +27,23 @@ module.exports = {
   },
   module: {
     rules: [
+      // Changed from ts-loader to esbuild loader
       {
         test: /\.ts$/,
-        loader: 'ts-loader',
+        // loader: 'esbuild-loader',
+        // options: {
+        //   loader: 'ts',
+        // },
+        use: {
+          loader: 'swc-loader',
+          options: {
+            jsc: {
+              parser: {
+                syntax: "typescript"
+              }
+            }
+          }
+        },
         exclude: /node_modules/,
       },
       {
@@ -40,7 +56,35 @@ module.exports = {
             },
             emitCss: prod,
             hotReload: !prod,
-            preprocess: sveltePreprocess({ sourceMap: !prod }),
+            preprocess: sveltePreprocess({
+              sourceMap: !prod,
+              typescript({ content }) {
+                // *SWC* is 30x faster than ESBuild wat
+                // const old = new Date();
+                const { code, map } = transformSync(content, {
+                  jsc: {
+                    parser: {
+                      syntax: 'typescript',
+                    },
+                  },
+                });
+                // console.log(
+                //   new Date().getMilliseconds() - old.getMilliseconds()
+                // );
+                return { code, map };
+              },
+              postcss: {
+                // map: production ? ctx.map : false,
+                // Not needed unless we're adding more plugins I think
+                // syntax: require('postcss-scss'),
+                // parser: require('postcss-scss'),
+                plugins: [require('autoprefixer')],
+              },
+              defaults: {
+                script: 'ts',
+                style: 'scss',
+              },
+            }),
           },
         },
       },
@@ -72,7 +116,6 @@ module.exports = {
     hot: true,
   },
   experiments: {
-    // asyncWebAssembly: true,
-    syncWebAssembly: true,
+    asyncWebAssembly: true,
   },
 };
