@@ -8,16 +8,23 @@ Preview the site @https://naughty-dijkstra-47fca6.netlify.app !
 
 ## TODO
 
+- [x] Snap scroll multiple pages?
+  - E.g. snap up for search engines, snap down for music
+- [ ] **Separate default layout with custom user layouts** (basically the heart of the extension lol)
+  - [ ] Create indexedDB to store config
+- "Edit" mode
+  - Easy way to add more links
+  - [ ] Cog icon that opens absolute-positioned side menu, with edit button
+  - [ ] In edit mode, create a temporary grid component on each level
+  - [ ] When user clicks this temporary grid, add a real grid
+  - We could also try using css `::before` and `::after`, idk
 - [ ] Sublinks for major links
   - Animated moving up to halfway in the opposite direction of the major grid
-- [ ] Easy way to add more links
-  - "Edit" mode
-- [ ] Some way to store links
-  - IndexedDB
+  - Use `<svelte:self>`, this means actually making separate components
+    - Each layer needs to have an orientation of up-down or left-right
+    - This is perfect for JSON file and matches the svelte tutorial
 - [ ] RAIN
   - Rain via canvas + rust wasm
-- Snap scroll multiple pages?
-  - E.g. snap up for search engines, snap down for music
 
 ## Attributions
 

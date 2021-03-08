@@ -86,9 +86,6 @@
     },
   ];
 
-  // const openLink = (url: string) => {
-  //   window.location.href = url;
-  // };
   const _functionThatIsNeverCalledForSWCTreeShakingPurposes = () => {
     scrollable(1, 1);
   };
@@ -120,9 +117,10 @@
   on:scrollchange={handleScrollChange}
 />
 
-f
 {#each pages as page}
   <div class="pages">
+  <!-- We should make `Links.svelte` its own component, and have it recursively display links-->
+  <!-- This means that our pages.JSON should also have `orientation` attribute -->
     {#each page.links as link}
       <div class="links">
         <a class="description" href={link.url}>

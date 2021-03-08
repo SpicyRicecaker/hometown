@@ -1,12 +1,15 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const sveltePreprocess = require('svelte-preprocess');
-// Imports the WasmPackPlugin, which allows ez interfacingf with .wasm files generated from wasm-pack
+// Imports the WasmPackPlugin, which allows for auto wasm-pack building of rust files as they're modified!
+// This is basically the reason that we're forced to use webpack, since I couldn't get @wasm-tool/rollup...plugin to work
 const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin');
-
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
-// Import esbuild plugin for typescript
+// Import swc to be inserted into svelte-preprocess for much faster compilations!
+// Keep in mind that *TREE SHAKING CANNOT BE TURNED OFF*. This means
+// variables only referenced in svelte markup will be trimmed. Currently ugly
+// hacks are used to keep these variables such as wrapping them in a dummy function
 const { transformSync } = require('@swc/core');
 
 module.exports = {
@@ -27,22 +30,19 @@ module.exports = {
   },
   module: {
     rules: [
-      // Changed from ts-loader to esbuild loader
+      // Changed from ts-loader to swc-loader
       {
         test: /\.ts$/,
-        // loader: 'esbuild-loader',
-        // options: {
-        //   loader: 'ts',
-        // },
+        // Check https://swc.rs/docs/usage-core#transformsync for more config options
         use: {
           loader: 'swc-loader',
           options: {
             jsc: {
               parser: {
-                syntax: "typescript"
-              }
-            }
-          }
+                syntax: 'typescript',
+              },
+            },
+          },
         },
         exclude: /node_modules/,
       },
@@ -60,7 +60,7 @@ module.exports = {
               sourceMap: !prod,
               typescript({ content }) {
                 // *SWC* is 30x faster than ESBuild wat
-                // const old = new Date();
+                // Check https://swc.rs/docs/usage-core#transformsync for more config options
                 const { code, map } = transformSync(content, {
                   jsc: {
                     parser: {
@@ -68,9 +68,6 @@ module.exports = {
                     },
                   },
                 });
-                // console.log(
-                //   new Date().getMilliseconds() - old.getMilliseconds()
-                // );
                 return { code, map };
               },
               postcss: {
@@ -106,7 +103,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
-    // Sets the WasmPackPlugin to the directory above
+    // Sets the WasmPackPlugin to root for auto reload
     new WasmPackPlugin({
       crateDirectory: __dirname,
     }),
