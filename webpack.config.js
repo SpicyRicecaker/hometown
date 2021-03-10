@@ -70,13 +70,7 @@ module.exports = {
                 });
                 return { code, map };
               },
-              postcss: {
-                // map: production ? ctx.map : false,
-                // Not needed unless we're adding more plugins I think
-                // syntax: require('postcss-scss'),
-                // parser: require('postcss-scss'),
-                plugins: [require('autoprefixer')],
-              },
+              postcss: true,
               defaults: {
                 script: 'ts',
                 style: 'scss',

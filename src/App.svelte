@@ -119,8 +119,8 @@
 
 {#each pages as page}
   <div class="pages">
-  <!-- We should make `Links.svelte` its own component, and have it recursively display links-->
-  <!-- This means that our pages.JSON should also have `orientation` attribute -->
+    <!-- We should make `Links.svelte` its own component, and have it recursively display links-->
+    <!-- This means that our pages.JSON should also have `orientation` attribute -->
     {#each page.links as link}
       <div class="links">
         <a class="description" href={link.url}>
@@ -152,14 +152,14 @@
   {/each}
 </div>
 
-<style>
+<style lang="scss">
   :global(html) {
     overflow: auto;
     scroll-snap-type: y proximity;
 
     scrollbar-width: none;
-    ::-webkit-scrollbar {
-      display: none;
+    &::-webkit-scrollbar {
+      width: 0;
     }
 
     width: 100%;
@@ -200,7 +200,7 @@
     color: #d4be98;
 
     display: grid;
-    grid-auto-flow: column;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 
     width: 100%;
     height: 100%;
