@@ -10,7 +10,7 @@ const prod = mode === 'production';
 // Keep in mind that *TREE SHAKING CANNOT BE TURNED OFF*. This means
 // variables only referenced in svelte markup will be trimmed. Currently ugly
 // hacks are used to keep these variables such as wrapping them in a dummy function
-const { transformSync } = require('@swc/core');
+// const { transformSync } = require('@swc/core');
 
 module.exports = {
   entry: {
@@ -58,18 +58,6 @@ module.exports = {
             hotReload: !prod,
             preprocess: sveltePreprocess({
               sourceMap: !prod,
-              typescript({ content }) {
-                // *SWC* is 30x faster than ESBuild wat
-                // Check https://swc.rs/docs/usage-core#transformsync for more config options
-                const { code, map } = transformSync(content, {
-                  jsc: {
-                    parser: {
-                      syntax: 'typescript',
-                    },
-                  },
-                });
-                return { code, map };
-              },
               postcss: true,
               defaults: {
                 script: 'ts',
@@ -98,9 +86,9 @@ module.exports = {
       filename: '[name].css',
     }),
     // Sets the WasmPackPlugin to root for auto reload
-    new WasmPackPlugin({
-      crateDirectory: __dirname,
-    }),
+    // new WasmPackPlugin({
+    //   crateDirectory: __dirname,
+    // }),
   ],
   devtool: prod ? false : 'source-map',
   devServer: {

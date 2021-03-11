@@ -1,6 +1,7 @@
 <script>
-  export let pages;
-  export let currentViewport;
+  import type { Page } from './types/link';
+  export let pages: Page[];
+  export let currentViewport: number;
 
   const scrollToViewport = (i: number) => {
     window.scrollTo({

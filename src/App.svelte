@@ -3,8 +3,16 @@
   import Nav from './Nav.svelte';
   import Pages from './Pages.svelte';
   import { scrollable } from './scrollable';
+  import { browser } from 'webextension-polyfill-ts';
 
   import type { Page } from './types/link';
+
+  (async () => {
+    // console.log(Cookies.2);
+    // await browser.storage.sync.set({ color: 'hi' });
+    // console.log(await browser.storage.sync.get('color'), 'hi');
+    console.log(browser);
+  })();
 
   let pages: Page[] = [
     {
@@ -107,12 +115,6 @@
       ],
     },
   ];
-
-  const _functionThatIsNeverCalledForSWCTreeShakingPurposes = () => {
-    scrollable(1, 1);
-    Nav;
-    Pages;
-  };
 
   let currentViewport = 1;
   let innerHeight = 0;
