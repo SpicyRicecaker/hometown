@@ -3,10 +3,6 @@
   export let pages: Page[];
 
   import LinkPage from './LinkPage.svelte';
-
-  const _functionThatIsNeverCalledForSWCTreeShakingPurposes = () => {
-    LinkPage;
-  };
 </script>
 
 {#each pages as page}

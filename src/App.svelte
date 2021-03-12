@@ -11,7 +11,8 @@
     // console.log(Cookies.2);
     // await browser.storage.sync.set({ color: 'hi' });
     // console.log(await browser.storage.sync.get('color'), 'hi');
-    console.log(browser);
+    await browser.storage.sync.set({ color: 'hi' });
+    console.log(await browser.storage.sync.get('color'));
   })();
 
   let pages: Page[] = [
