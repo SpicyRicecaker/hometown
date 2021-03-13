@@ -30,7 +30,7 @@
   "scripts": {
     "open": "web-ext run -f $HOME/.opt/firefox/firefox -p ",
     "dev": "webpack -w & web-ext run",
-    "build": "pnpm build-web-ext && pnpm build-webpack",
+    "build": "pnpm build-webpack && pnpm build-web-ext",
     "build-web-ext": "web-ext build --overwrite-dest",
     "build-webpack": "cross-env NODE_ENV=production webpack",
     "dev-web": "webpack serve --content-base public",
