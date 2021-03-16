@@ -2,19 +2,21 @@
   import { onMount } from 'svelte';
   import Nav from './Nav.svelte';
   import Pages from './Pages.svelte';
+  import Menu from './Menu.svelte';
   import { scrollable } from './scrollable';
   import { browser } from 'webextension-polyfill-ts';
 
   import type { Page } from './types/link';
 
-  (async () => {
+  // (async () => {
     // console.log(Cookies.2);
     // await browser.storage.sync.set({ color: 'hi' });
     // console.log(await browser.storage.sync.get('color'), 'hi');
-    await browser.storage.sync.set({ color: 'hi' });
-    console.log(await browser.storage.sync.get('color'));
-  })();
+  // })();
 
+  // const updateStorage = async () => {
+  //}
+  
   let pages: Page[] = [
     {
       description: 'lang',
@@ -121,13 +123,25 @@
   let innerHeight = 0;
   let scrollY: number;
 
-  onMount(() => {
+  onMount(async () => {
+    // Load initial height
     scrollY = innerHeight * currentViewport;
+    // Load our pages from browser storage
+    pages = (await browser.storage.sync.get('pages')).pages;
   });
 
   const handleScrollChange = (e: any) => {
     currentViewport = e.detail.newCurrentViewport;
   };
+
+  // Make sure to update our internal storage everytime page is changed
+  $: {
+    // Probably inefficient, because right as we set pages in the beginning we're updating for no reason
+    (async () => {
+    await browser.storage.sync.set( { pages: pages} );
+    }
+    )();
+  }
 </script>
 
 <svelte:window
@@ -139,6 +153,7 @@
 
 <Pages bind:pages />
 <Nav bind:pages bind:currentViewport />
+<Menu bind:pages />
 
 <style lang="scss">
   :global(html) {
