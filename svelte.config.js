@@ -7,7 +7,7 @@ const sveltePreprocess = require('svelte-preprocess');
 
 const createPreprocessors = () =>
   sveltePreprocess({
-    postcss: true,
+    // postcss: true,
     defaults: {
       script: 'ts',
       style: 'scss',

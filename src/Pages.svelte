@@ -1,8 +1,8 @@
 <script>
-  import type { Page } from './types/link';
+  import type { Page } from "./types/link";
   export let pages: Page[];
 
-  import LinkPage from './LinkPage.svelte';
+  import LinkPage from "./LinkPage.svelte";
 </script>
 
 {#each pages as page}
