@@ -22,15 +22,15 @@
   {/each}
 </div>
 
-<style>
+<style lang="scss">
   .nav {
-    /* Align to right middle */
+    // Align to right middle
     position: fixed;
     top: 0;
     height: 100%;
     right: 0.5rem;
 
-    /* Compress content (circles) to mid */
+    // Compress content (circles) to mid
     display: grid;
     align-content: center;
     /* Have just a small gap in between */
@@ -38,7 +38,7 @@
     pointer-events: none;
     & > * {
       pointer-events: auto;
-      /* cursor: cell; */
+      // cursor: cell;
       display: block;
       background-color: #7c6f64;
       padding: 0.5rem;

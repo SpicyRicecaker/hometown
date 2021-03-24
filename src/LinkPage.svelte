@@ -1,5 +1,5 @@
 <script>
-  import type { Link } from "./types/link";
+  import type { Link } from './types/link';
   export let links: Link[];
 </script>
 

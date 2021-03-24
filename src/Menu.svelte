@@ -13,7 +13,6 @@
   }
 
   let settings: any;
-
   let changeSettings = () => {
     visible = !visible;
     if (!visible) {
