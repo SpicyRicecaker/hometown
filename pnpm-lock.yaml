@@ -37,6 +37,8 @@ devDependencies:
   mini-css-extract-plugin: 1.4.0_webpack@5.30.0
   postcss-load-config: 3.0.1
   postcss-scss: 3.0.5
+  prettier: 2.2.1
+  prettier-plugin-svelte: 2.2.0_prettier@2.2.1+svelte@3.35.0
   rimraf: 3.0.2
   sass: 1.32.8
   svelte: 3.37.0
@@ -4408,7 +4410,6 @@ packages:
     resolution: {integrity: sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=}
     engines: {node: '>=4'}
     dev: true
-
   /printj/1.1.2:
     resolution: {integrity: sha512-zA2SmoLaxZyArQTOPj5LXecR+RagfPSU5Kw1qP+jkWeNlrq+eJZyY2oS68SU1Z/7/myXM4lo9716laOFAVStCQ==}
     engines: {node: '>=0.8'}
@@ -5067,7 +5068,6 @@ packages:
       atomic-sleep: 1.0.0
       flatstr: 1.0.12
     dev: true
-
   /source-list-map/2.0.1:
     resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
     dev: true

@@ -12,6 +12,8 @@
     "mini-css-extract-plugin": "^1.4.0",
     "postcss-load-config": "^3.0.1",
     "postcss-scss": "^3.0.5",
+    "prettier": "^2.2.1",
+    "prettier-plugin-svelte": "^2.2.0",
     "rimraf": "^3.0.2",
     "sass": "^1.32.8",
     "svelte": "^3.37.0",
@@ -28,9 +30,12 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "build": "rimraf dist pkg && cross-env NODE_ENV=production webpack",
-    "production": "pnpm build && web-ext build --overwrite-dest",
-    "dev": "rimraf dist pkg && webpack serve --content-base public",
+    "open": "web-ext run -f /usr/bin/firefox-developer-edition -p",
+    "dev": "webpack -w & pnpm open",
+    "build": "pnpm build-webpack && pnpm build-web-ext",
+    "build-web-ext": "web-ext build --overwrite-dest",
+    "build-webpack": "cross-env NODE_ENV=production webpack",
+    "dev-web": "webpack serve --content-base public",
     "validate": "svelte-check",
     "test": "cargo test && wasm-pack test --headless"
   }

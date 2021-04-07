@@ -1,12 +1,12 @@
-<script>
-  import type { Page } from './types/link';
+<script lang="ts">
+  import type { Page } from "./types/link";
   export let pages: Page[];
   export let currentViewport: number;
 
   const scrollToViewport = (i: number) => {
     window.scrollTo({
       top: innerHeight * i,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 </script>
@@ -33,10 +33,10 @@
     // Compress content (circles) to mid
     display: grid;
     align-content: center;
-    // Have just a small gap in between
+    /* Have just a small gap in between */
     gap: 1rem;
     pointer-events: none;
-    & * {
+    & > * {
       pointer-events: auto;
       // cursor: cell;
       display: block;
