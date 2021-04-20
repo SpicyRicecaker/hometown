@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { Page } from "./types/link";
-  export let pages: Page[];
+  import {pages} from './stores';
   export let currentViewport: number;
 
   const scrollToViewport = (i: number) => {
@@ -12,7 +11,7 @@
 </script>
 
 <div class="nav">
-  {#each pages as _page, i}
+  {#each $pages as _page, i}
     <div
       class:selected={i === currentViewport}
       on:click={(_e) => {

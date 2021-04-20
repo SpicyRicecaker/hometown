@@ -34,16 +34,7 @@ module.exports = {
       {
         test: /\.ts$/,
         // Check https://swc.rs/docs/usage-core#transformsync for more config options
-        use: {
-          loader: 'swc-loader',
-          options: {
-            jsc: {
-              parser: {
-                syntax: 'typescript',
-              },
-            },
-          },
-        },
+        loader: 'ts-loader',
         exclude: /node_modules/,
       },
       {

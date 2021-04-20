@@ -1,7 +1,5 @@
 <script>
-  import type { Page } from './types/link';
-  // import { fly } from 'svelte/transition';
-  export let pages: Page[];
+  import {pages} from './stores';
 
   let visible: boolean = false;
 
@@ -39,7 +37,7 @@
     // Get the latest file
     const latestFile: File = fileList.files[fileList.files.length - 1];
     try {
-      pages = JSON.parse(await readAsTextAsync(latestFile));
+      $pages = JSON.parse(await readAsTextAsync(latestFile));
     } catch (e) {
       console.log(e);
     }

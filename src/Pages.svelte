@@ -1,11 +1,10 @@
 <script>
-  import type { Page } from "./types/link";
-  export let pages: Page[];
+  import { pages } from './stores';
 
   import LinkPage from "./LinkPage.svelte";
 </script>
 
-{#each pages as page}
+{#each $pages as page}
   <div class="pages">
     <LinkPage links={page.links} />
   </div>

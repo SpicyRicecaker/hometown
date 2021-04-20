@@ -4,11 +4,9 @@
   import Pages from './Pages.svelte';
   import Menu from './Menu.svelte';
   import { scrollable } from './scrollable';
-  import { browser } from 'webextension-polyfill-ts';
+  import {pages, getPagesFromBrowser} from './stores';
 
-  import type { Page } from './types/link';
-
-  let pages: Page[] = [];
+  // import type { Page } from './types/link';
 
   let currentViewport = 1;
   let innerHeight = 0;
@@ -18,21 +16,20 @@
     // Load initial height
     scrollY = innerHeight * currentViewport;
     // Load our pages from browser storage
-    pages = (await browser.storage.sync.get('pages')).pages;
-    console.log('pages should be', pages);
+    $pages = await getPagesFromBrowser();
   });
 
   const handleScrollChange = (e: any) => {
     currentViewport = e.detail.newCurrentViewport;
   };
 
-  // Make sure to update our internal storage everytime page is changed
-  $: {
-    // Probably inefficient, because right as we set pages in the beginning we're updating for no reason
-    (async () => {
-      await browser.storage.sync.set({ pages: pages });
-    })();
-  }
+  // // Make sure to update our internal storage everytime page is changed
+  // $: {
+  //   // Probably inefficient, because right as we set pages in the beginning we're updating for no reason
+  //   (async () => {
+  //     await browser.storage.sync.set({ pages: pages });
+  //   })();
+  // }
 </script>
 
 <svelte:window
@@ -42,9 +39,9 @@
   on:scrollchange={handleScrollChange}
 />
 
-<Pages bind:pages />
-<Nav bind:pages bind:currentViewport />
-<Menu bind:pages />
+<Pages />
+<Nav bind:currentViewport />
+<Menu />
 
 <style lang="scss">
   :global(html) {
