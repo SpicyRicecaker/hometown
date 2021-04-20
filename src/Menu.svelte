@@ -1,5 +1,5 @@
 <script>
-  import type { Page } from "./types/link";
+  import type { Page } from './types/link';
   // import { fly } from 'svelte/transition';
   export let pages: Page[];
 
@@ -23,24 +23,41 @@
   };
 
   const exportJSON = () => {
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     const blob = new Blob([JSON.stringify(pages)], {
-      type: "application/json",
+      type: 'application/json',
     });
     const url = URL.createObjectURL(blob);
-    a.setAttribute("href", url);
-    a.setAttribute("download", `${new Date()}.json`);
+    a.setAttribute('href', url);
+    a.setAttribute('download', `${new Date()}.json`);
     a.click();
   };
 
-  let fileList;
+  let fileList: HTMLInputElement;
 
-  const handleImportJSON = () => {
+  const handleImportJSON = async () => {
     // Get the latest file
-    const latestFile = fileList[fileList.length - 1];
-    //
-    pages;
+    const latestFile: File = fileList.files[fileList.files.length - 1];
+    try {
+      pages = JSON.parse(await readAsTextAsync(latestFile));
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  // Helper function to make reader async
+  const readAsTextAsync = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.readAsText(file);
+
+      reader.onload = () => {
+        resolve(reader.result as string);
+      };
+
+      reader.onerror = reject;
+    });
 </script>
 
 <div
@@ -51,7 +68,12 @@
   <div class="menu" bind:offsetWidth>
     <label class="custom-file-upload">
       Import JSON
-      <input type="file" on:change={handleImportJSON} bind:this={fileList} />
+      <input
+        type="file"
+        accept=".json"
+        on:change={handleImportJSON}
+        bind:this={fileList}
+      />
     </label>
     <button on:click={() => exportJSON()}> Export JSON </button>
     <button> Edit Mode </button>
@@ -126,7 +148,7 @@
     background-color: #c18f41;
   }
 
-  input[type="file"] {
+  input[type='file'] {
     display: none;
   }
   .custom-file-upload {
