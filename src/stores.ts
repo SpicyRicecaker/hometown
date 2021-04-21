@@ -3,12 +3,19 @@ import { writable } from 'svelte/store';
 // Import browser store, given to web extensions
 import { browser } from 'webextension-polyfill-ts';
 // Import page type
-import type { Page } from './types/link';
+import type { Page, Link } from './types/link';
 
 export const stockPage: Page = {
   links: [],
   description: 'default',
   orientation: 'column',
+};
+
+export const stockLink: Link = {
+  description: 'default',
+  orientation: 'column',
+  url: '#',
+  links: [],
 };
 
 // Creates our page store
@@ -42,3 +49,14 @@ export const sync = async (pages: Page[]): Promise<void> =>
 
 // Our page store, very important and holds all information about every page
 export const pages = createPages();
+
+const createEditing = () => {
+  const { subscribe, update } = writable(false);
+
+  return {
+    subscribe,
+    toggle: () => update((state) => !state),
+  };
+};
+
+export const editing = createEditing();

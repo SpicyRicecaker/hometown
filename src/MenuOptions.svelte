@@ -1,5 +1,6 @@
 <script>
-  import { pages, sync } from './stores';
+  import { pages, sync, stockPage } from './stores';
+  import { editing } from './stores';
 
   let fileList: HTMLInputElement;
 
@@ -44,6 +45,17 @@
 
       reader.onerror = reject;
     });
+
+  // Toggles editing mode
+  const toggleEditing = () => {
+    // Insert stock into pages
+
+    if ($editing) {
+    } else {
+      $pages = [...$pages, stockPage];
+    }
+    editing.toggle();
+  };
 </script>
 
 <input
@@ -58,8 +70,8 @@
 <div class="export" on:click={() => exportJSON()}>
   <div>Export</div>
 </div>
-<div class="edit">
-  <div>Edit</div>
+<div class="edit" on:click={() => toggleEditing()}>
+  <div>{$editing ? 'Save' : 'Edit'}</div>
 </div>
 
 <style lang="scss">

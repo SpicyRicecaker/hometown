@@ -1,6 +1,12 @@
 <script>
   import type { Link } from './types/link';
   export let links: Link[];
+  
+  import {editing, stockLink} from './stores';
+  
+  const permaPush = () => {
+    links = [...links, stockLink];
+  }
 </script>
 
 {#each links as link}
@@ -13,6 +19,18 @@
     <svelte:self links={link.links} />
   </div>
 {/each}
+
+{#if $editing }
+  <div class="links" on:click={permaPush}>
+    <!-- svelte-ignore a11y-invalid-attribute -->
+    <a class="description" href="#">
+      <div>
+        +
+      </div>
+    </a>
+    <!-- <svelte:self links={link.links} /> -->
+  </div>
+{/if}
 
 <style lang="scss">
   .links {

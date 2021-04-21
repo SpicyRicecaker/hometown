@@ -1,8 +1,7 @@
 <script>
-  import { pages } from './stores';
+  import { pages, editing } from './stores';
+  import LinkPage from './LinkPage.svelte';
   
-
-  import LinkPage from "./LinkPage.svelte";
 </script>
 
 {#each $pages as page}
