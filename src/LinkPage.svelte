@@ -16,8 +16,6 @@
 
 <style lang="scss">
   .links {
-    // align-self: center;
-    // justify-self: center;
     display: flex;
     flex-direction: column;
 

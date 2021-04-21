@@ -1,6 +1,5 @@
 <script>
-  import { pages, sync } from './stores';
-
+  import MenuOptions from './MenuOptions.svelte';
   let visible: boolean = false;
 
   let offsetWidth: number = 0;
@@ -19,63 +18,17 @@
       offsetReadWidth = 0;
     }
   };
-
-  const exportJSON = () => {
-    const a = document.createElement('a');
-    const blob = new Blob([JSON.stringify(pages)], {
-      type: 'application/json',
-    });
-    const url = URL.createObjectURL(blob);
-    a.setAttribute('href', url);
-    a.setAttribute('download', `${new Date()}.json`);
-    a.click();
-  };
-
-  let fileList: HTMLInputElement;
-
-  const handleImportJSON = async () => {
-    // Get the latest file
-    const latestFile: File = fileList.files[fileList.files.length - 1];
-    try {
-      $pages = JSON.parse(await readAsTextAsync(latestFile));
-      await sync($pages);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // Helper function to make reader async
-  const readAsTextAsync = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.readAsText(file);
-
-      reader.onload = () => {
-        resolve(reader.result as string);
-      };
-
-      reader.onerror = reject;
-    });
 </script>
 
+<!-- .settings is like the cog icon -->
 <div
   class="settings"
   style="transform: translate3d({-offsetReadWidth}px, 0, 0);"
   bind:this={settings}
 >
+  <!-- .menu are the options that the settings cog pulls up -->
   <div class="menu" bind:offsetWidth>
-    <label class="custom-file-upload">
-      Import JSON
-      <input
-        type="file"
-        accept=".json"
-        on:change={handleImportJSON}
-        bind:this={fileList}
-      />
-    </label>
-    <button on:click={() => exportJSON()}> Export JSON </button>
-    <button> Edit Mode </button>
+    <MenuOptions />
   </div>
   <div
     class="toggle"
@@ -117,24 +70,10 @@
   }
 
   .menu {
-    /* Styling */
     background-color: #d4be98;
-    padding: 1rem;
 
-    /* Distribute options evenly */
     display: grid;
     grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
-
-    /* Make it so that the menu can actually be clicked */
-    & > * {
-      pointer-events: auto;
-    }
-
-    /* Transition so the cog is pushed
-    // transition: transform .3s cubic-bezier(0, .52, 0, 1);
-    // display: none;
-    // transform: translate3d(-100vw, 0, 0);
-    */
   }
 
   .gear {
@@ -143,17 +82,4 @@
     }
   }
 
-  .selected {
-    background-color: #c18f41;
-  }
-
-  input[type='file'] {
-    display: none;
-  }
-  .custom-file-upload {
-    background-color: white;
-    display: block;
-    cursor: pointer;
-    /* border: 1px solid black; */
-  }
 </style>
