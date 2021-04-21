@@ -1,12 +1,12 @@
 <script>
-  import { pages, editing } from './stores';
+  import { pages } from './stores';
   import LinkPage from './LinkPage.svelte';
   
 </script>
 
 {#each $pages as page}
   <div class="pages">
-    <LinkPage links={page.links} />
+    <LinkPage bind:links={page.links} />
   </div>
 {/each}
 

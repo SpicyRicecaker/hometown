@@ -5,22 +5,26 @@ import { browser } from 'webextension-polyfill-ts';
 // Import page type
 import type { Page, Link } from './types/link';
 
-export const stockPage: Page = {
-  links: [],
-  description: 'default',
-  orientation: 'column',
+export const stockPage = (): Page => {
+  return {
+    links: [],
+    description: 'default',
+    orientation: 'column',
+  };
 };
 
-export const stockLink: Link = {
-  description: 'default',
-  orientation: 'column',
-  url: '#',
-  links: [],
+export const stockLink = (): Link => {
+  return {
+    description: 'name',
+    orientation: 'column',
+    url: 'url',
+    links: [],
+  };
 };
 
 // Creates our page store
 const createPages = () => {
-  const { subscribe, set } = writable<Page[]>([stockPage]);
+  const { subscribe, set } = writable<Page[]>([stockPage()]);
 
   return {
     subscribe,

@@ -47,12 +47,12 @@
     });
 
   // Toggles editing mode
-  const toggleEditing = () => {
-    // Insert stock into pages
-
+  const toggleEditing = async () => {
     if ($editing) {
+      await sync($pages);
     } else {
-      $pages = [...$pages, stockPage];
+      // Insert stock into pages
+      $pages = [...$pages, stockPage()];
     }
     editing.toggle();
   };
