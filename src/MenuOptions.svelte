@@ -12,7 +12,11 @@
     });
     const url = URL.createObjectURL(blob);
     a.setAttribute('href', url);
-    a.setAttribute('download', `${new Date()}.json`);
+    const d = new Date();
+    const s = `hometown-${d.getDate()}-${d.toLocaleString('default', {
+      month: 'long',
+    })}-${d.getFullYear()}`;
+    a.setAttribute('download', `${s}.json`);
     a.click();
   };
 
@@ -52,7 +56,7 @@
       await sync($pages);
     } else {
       // Insert stock into pages
-      $pages = [...$pages, stockPage()];
+      // $pages = [...$pages, stockPage()];
     }
     editing.toggle();
   };

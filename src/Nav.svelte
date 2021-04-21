@@ -1,11 +1,12 @@
 <script lang="ts">
-  import {pages} from './stores';
+  import { pages, stockPage } from './stores';
+  import { editing } from './stores';
   export let currentViewport: number;
 
   const scrollToViewport = (i: number) => {
     window.scrollTo({
       top: innerHeight * i,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 </script>
@@ -19,6 +20,16 @@
       }}
     />
   {/each}
+
+  {#if $editing}
+    <div
+      class="add"
+      style="border-radius: 1rem"
+      on:click={() => {
+        $pages = [...$pages, stockPage()];
+      }}
+    />
+  {/if}
 </div>
 
 <style lang="scss">
@@ -49,5 +60,12 @@
 
   .selected {
     background-color: #c18f41;
+  }
+
+  .add {
+    background-color: #a9b665;
+    &:hover {
+      cursor: cell;
+    }
   }
 </style>
