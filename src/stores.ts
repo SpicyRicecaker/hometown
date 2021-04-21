@@ -6,20 +6,31 @@ import { browser } from 'webextension-polyfill-ts';
 import type { Page } from './types/link';
 
 // Creates our page store
-// On update also push to browser store
 const createPages = () => {
   const { subscribe, set } = writable<Page[]>([]);
 
   return {
     subscribe,
-    sync: async () => await browser.storage.sync.set({ pages: pages }),
     set,
   };
 };
 
+// Called when initializing app.svelte
+// takes in our stored pages from storage granted to browser extensions,
+// then sets our current pages equal to it
 export const getPagesFromBrowser = async (): Promise<Page[]> => {
-  const res: Page[] = (await browser.storage.sync.get()) as Page[];
-  return res ? res : [];
+  const { pages } = await browser.storage.sync.get();
+  return pages ? pages : [];
 };
 
+// Should be called whenever pages changes
+// The reason that we're not always calling this onchange is because
+// when app.svelte initializes, the pages value gets changed multiple times
+// So we're calling this manually
+//
+// *TODO* If we're updating it manually, it would probably make more sense if we made a pagesDB and manually updated that
+export const sync = async (pages: Page[]): Promise<void> =>
+  await browser.storage.sync.set({ pages: pages });
+
+// Our page store, very important and holds all information about every page
 export const pages = createPages();

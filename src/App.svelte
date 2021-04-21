@@ -4,7 +4,7 @@
   import Pages from './Pages.svelte';
   import Menu from './Menu.svelte';
   import { scrollable } from './scrollable';
-  import {pages, getPagesFromBrowser} from './stores';
+  import { pages, getPagesFromBrowser } from './stores';
 
   // import type { Page } from './types/link';
 
@@ -39,6 +39,7 @@
   on:scrollchange={handleScrollChange}
 />
 
+{console.log('pages is currently', $pages)}
 <Pages />
 <Nav bind:currentViewport />
 <Menu />

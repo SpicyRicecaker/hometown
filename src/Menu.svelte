@@ -1,5 +1,5 @@
 <script>
-  import {pages} from './stores';
+  import { pages, sync } from './stores';
 
   let visible: boolean = false;
 
@@ -38,6 +38,7 @@
     const latestFile: File = fileList.files[fileList.files.length - 1];
     try {
       $pages = JSON.parse(await readAsTextAsync(latestFile));
+      await sync($pages);
     } catch (e) {
       console.log(e);
     }
