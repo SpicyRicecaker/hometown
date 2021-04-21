@@ -1,5 +1,6 @@
 <script>
   import { pages } from './stores';
+  
 
   import LinkPage from "./LinkPage.svelte";
 </script>

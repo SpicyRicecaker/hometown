@@ -6,8 +6,6 @@
   import { scrollable } from './scrollable';
   import { pages, getPagesFromBrowser } from './stores';
 
-  // import type { Page } from './types/link';
-
   let currentViewport = 1;
   let innerHeight = 0;
   let scrollY: number;
@@ -16,7 +14,7 @@
     // Load initial height
     scrollY = innerHeight * currentViewport;
     // Load our pages from browser storage
-    $pages = await getPagesFromBrowser();
+    $pages = await getPagesFromBrowser($pages);
   });
 
   const handleScrollChange = (e: any) => {
@@ -39,7 +37,6 @@
   on:scrollchange={handleScrollChange}
 />
 
-{console.log('pages is currently', $pages)}
 <Pages />
 <Nav bind:currentViewport />
 <Menu />
@@ -60,6 +57,8 @@
   :global(body) {
     margin: 0;
     padding: 0;
+    // Probably will remove l8r
+    background-color: #292828;
   }
 
   @media (min-width: 640px) {

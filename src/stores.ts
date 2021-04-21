@@ -5,9 +5,15 @@ import { browser } from 'webextension-polyfill-ts';
 // Import page type
 import type { Page } from './types/link';
 
+export const stockPage: Page = {
+  links: [],
+  description: 'default',
+  orientation: 'column',
+};
+
 // Creates our page store
 const createPages = () => {
-  const { subscribe, set } = writable<Page[]>([]);
+  const { subscribe, set } = writable<Page[]>([stockPage]);
 
   return {
     subscribe,
@@ -18,9 +24,11 @@ const createPages = () => {
 // Called when initializing app.svelte
 // takes in our stored pages from storage granted to browser extensions,
 // then sets our current pages equal to it
-export const getPagesFromBrowser = async (): Promise<Page[]> => {
+export const getPagesFromBrowser = async (
+  oldPages: Page[]
+): Promise<Page[]> => {
   const { pages } = await browser.storage.sync.get();
-  return pages ? pages : [];
+  return pages ? pages : oldPages;
 };
 
 // Should be called whenever pages changes
