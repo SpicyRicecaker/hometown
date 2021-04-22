@@ -7,9 +7,14 @@
   const permaPush = () => {
     links = [...links, stockLink()];
   };
+
+  const removeElement = (i: number) => {
+    links.splice(i, 1);
+    links = links;
+  };
 </script>
 
-{#each links as link}
+{#each links as link, i}
   <div class="links">
     {#if !$editing}
       <a class="description" href={link.url}>
@@ -27,6 +32,8 @@
             contenteditable="true"
             bind:innerHTML={link.url}
           /><span>)</span>
+          <span on:click={() => removeElement(i)} style="color: #ea6962">×</span
+          >
         </div>
       </div>
     {/if}
