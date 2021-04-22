@@ -34,7 +34,7 @@ export const scrollable = (node: any, currentViewport: number) => {
   // In the case of a scroll event...
   //
   // Function referenced from https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event
-  const throttleScroll = (e: UIEvent) => {
+  const throttleScroll = (_e: UIEvent) => {
     // Update our last known scroll position
     lastKnownScrollPosition = window.scrollY;
 

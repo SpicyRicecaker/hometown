@@ -43,11 +43,9 @@
 
 {#if $editing}
   <div class="links" on:click={permaPush}>
-    <!-- svelte-ignore a11y-invalid-attribute -->
     <div class="description">
       <div>+</div>
     </div>
-    <!-- <svelte:self links={link.links} /> -->
   </div>
 {/if}
 

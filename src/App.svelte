@@ -1,55 +1,62 @@
 <script>
+  // onMount from svelte library runs when the component is first visible on DOM 
   import { onMount } from 'svelte';
-  import Nav from './Nav.svelte';
-  import Pages from './Pages.svelte';
-  import Menu from './Menu.svelte';
+  // Our main components of the program
+  import Nav from './Nav.svelte'; // Nav are the dots you see to the right
+  import Pages from './Pages.svelte'; // Pages are a screen's height, they hold the links that you click on
+  import Menu from './Menu.svelte'; // Menu opens the config to import, export, and edit our pages
+  // Scrollable is our main method of keeping track of which page we're on
   import { scrollable } from './scrollable';
+  // We've gotta load our pages from browser extension storage into our live storage
   import { pages, getPagesFromBrowser } from './stores';
 
-  let currentViewport = 1;
-  let innerHeight = 0;
-  let scrollY: number;
+  // These three variables allow us to calculate which page we're on
+  // and generate a minimap for it
+  let currentViewport = 1; // Current viewport is the page that we're on
+  let innerHeight = 0; // Inner height is the height of each page
+  let scrollY: number; // ScrollY is how far we've scrolled in total
 
+  // When this component is first loaded into the DOM (is visible)
   onMount(async () => {
-    // Load initial height
+    // Claculate the amount we've scrolled
     scrollY = innerHeight * currentViewport;
     // Load our pages from browser storage
     $pages = await getPagesFromBrowser($pages);
   });
 
+  // Everytime that we've calculated that we've moved to a new page,
+  // update our current viewport visually
   const handleScrollChange = (e: any) => {
     currentViewport = e.detail.newCurrentViewport;
   };
-
-  // // Make sure to update our internal storage everytime page is changed
-  // $: {
-  //   // Probably inefficient, because right as we set pages in the beginning we're updating for no reason
-  //   (async () => {
-  //     await browser.storage.sync.set({ pages: pages });
-  //   })();
-  // }
 </script>
 
+<!-- Pass scroll events -> scrollabe, take in viewport changes from scrollable -->
 <svelte:window
   bind:innerHeight
   bind:scrollY
-  use:scrollable={currentViewport}
+  use:scrollable={currentViewport} 
   on:scrollchange={handleScrollChange}
 />
 
+<!-- Pages are a screens height and hold links-->
 <Pages />
+<!-- Nav consists of the dots you see to the right -->
 <Nav bind:currentViewport />
+<!-- Menu consists of edit,import,export options for pages -->
 <Menu />
 
 <style lang="scss">
   :global(html) {
+    // Try not to show scrollbar
     overflow: auto;
-    scroll-snap-type: y proximity;
-
     scrollbar-width: none;
     &::-webkit-scrollbar {
       width: 0;
     }
+
+    // Scroll snap is scroll correction, does not work unless 100% w/h
+    scroll-snap-type: y proximity;
 
     width: 100%;
     height: 100%;
@@ -57,7 +64,7 @@
   :global(body) {
     margin: 0;
     padding: 0;
-    // Probably will remove l8r
+    // Tries to prevent screen flashing on load
     background-color: #292828;
   }
 

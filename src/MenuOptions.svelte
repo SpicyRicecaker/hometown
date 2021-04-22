@@ -1,32 +1,36 @@
 <script>
-  import { pages, sync, stockPage } from './stores';
+  import { pages, sync } from './stores';
   import { editing } from './stores';
 
   let fileList: HTMLInputElement;
 
-  // Exports user's page files
+  // Exports user's page config through making a download tag and clicking on it
   const exportJSON = () => {
-    const a = document.createElement('a');
+    // Serialize data into data url
     const blob = new Blob([JSON.stringify(pages)], {
       type: 'application/json',
     });
     const url = URL.createObjectURL(blob);
-    a.setAttribute('href', url);
+    // Make a name for the config file
     const d = new Date();
     const s = `hometown-${d.getDate()}-${d.toLocaleString('default', {
       month: 'long',
     })}-${d.getFullYear()}`;
+    // Create a download tag with the right attributes, and click on it
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
     a.setAttribute('download', `${s}.json`);
     a.click();
   };
 
-  const clickFile = (e: MouseEvent) => {
+  // Redirects click to type=input
+  const clickFileInput = (e: MouseEvent) => {
     e.preventDefault();
     fileList.click();
   };
 
-  // Imports user's page files
-  const handleImportJSON = async () => {
+  // Imports user's page files by reading file list
+  const importJSON = async () => {
     const latestFile: File = fileList.files[fileList.files.length - 1];
     try {
       $pages = JSON.parse(await readAsTextAsync(latestFile));
@@ -50,30 +54,31 @@
       reader.onerror = reject;
     });
 
-  // Toggles editing mode
+  // Toggles editing mode, pretty important
   const toggleEditing = async () => {
     if ($editing) {
       await sync($pages);
-    } else {
-      // Insert stock into pages
-      // $pages = [...$pages, stockPage()];
     }
     editing.toggle();
   };
 </script>
 
+<!-- Hidden by default so we can style with <div>s in front -->
 <input
   type="file"
   accept=".json"
-  on:change={handleImportJSON}
+  on:change={importJSON}
   bind:this={fileList}
 />
-<div class="import" on:click={(e) => clickFile(e)}>
+<!-- Button that activates input type=file -->
+<div class="import" on:click={(e) => clickFileInput(e)}>
   <div>Import</div>
 </div>
+<!-- Button that downloads page config -->
 <div class="export" on:click={() => exportJSON()}>
   <div>Export</div>
 </div>
+<!-- Button that enables editing -->
 <div class="edit" on:click={() => toggleEditing()}>
   <div>{$editing ? 'Save' : 'Edit'}</div>
 </div>
@@ -94,6 +99,7 @@
       cursor: pointer;
     }
 
+    // Center text in each button
     display: grid;
     & > * {
       align-self: center;
@@ -104,6 +110,7 @@
     pointer-events: auto;
   }
 
+  // input[type='file'] hidden for stylistic purposes
   input[type='file'] {
     display: none;
   }
