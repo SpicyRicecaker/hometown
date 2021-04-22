@@ -1,6 +1,6 @@
 <script>
-  // onMount from svelte library runs when the component is first visible on DOM 
-  import { onMount } from 'svelte';
+  // onMount from svelte library runs when the component is first visible on DOM
+  import { onMount, tick } from 'svelte';
   // Our main components of the program
   import Nav from './Nav.svelte'; // Nav are the dots you see to the right
   import Pages from './Pages.svelte'; // Pages are a screen's height, they hold the links that you click on
@@ -14,14 +14,15 @@
   // and generate a minimap for it
   let currentViewport = 1; // Current viewport is the page that we're on
   let innerHeight = 0; // Inner height is the height of each page
-  let scrollY: number; // ScrollY is how far we've scrolled in total
+  let scrollY: number = 0; // ScrollY is how far we've scrolled in total
 
   // When this component is first loaded into the DOM (is visible)
   onMount(async () => {
-    // Claculate the amount we've scrolled
-    scrollY = innerHeight * currentViewport;
     // Load our pages from browser storage
     $pages = await getPagesFromBrowser($pages);
+      await tick();
+    // Claculate the amount we've scrolled
+    scrollY = innerHeight * currentViewport;
   });
 
   // Everytime that we've calculated that we've moved to a new page,
@@ -35,7 +36,7 @@
 <svelte:window
   bind:innerHeight
   bind:scrollY
-  use:scrollable={currentViewport} 
+  use:scrollable={currentViewport}
   on:scrollchange={handleScrollChange}
 />
 

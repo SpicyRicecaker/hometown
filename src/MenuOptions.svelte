@@ -64,12 +64,7 @@
 </script>
 
 <!-- Hidden by default so we can style with <div>s in front -->
-<input
-  type="file"
-  accept=".json"
-  on:change={importJSON}
-  bind:this={fileList}
-/>
+<input type="file" accept=".json" on:change={importJSON} bind:this={fileList} />
 <!-- Button that activates input type=file -->
 <div class="import" on:click={(e) => clickFileInput(e)}>
   <div>Import</div>
@@ -82,6 +77,11 @@
 <div class="edit" on:click={() => toggleEditing()}>
   <div>{$editing ? 'Save' : 'Edit'}</div>
 </div>
+<span class="export">
+  <div>
+    <span>2</span><span>nd</span>
+  </div>
+</span>
 
 <style lang="scss">
   .import,

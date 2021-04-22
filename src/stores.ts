@@ -64,3 +64,5 @@ const createEditing = () => {
 };
 
 export const editing = createEditing();
+
+export const defaultPage = 0;
