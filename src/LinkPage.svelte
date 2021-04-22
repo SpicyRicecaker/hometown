@@ -67,9 +67,10 @@
       height: 100%;
 
       display: grid;
-      & * {
+      & > * {
         align-self: center;
         justify-self: center;
+        word-break: break-all;
       }
     }
   }

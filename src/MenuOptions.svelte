@@ -7,7 +7,7 @@
   // Exports user's page config through making a download tag and clicking on it
   const exportJSON = () => {
     // Serialize data into data url
-    const blob = new Blob([JSON.stringify(pages)], {
+    const blob = new Blob([JSON.stringify($pages)], {
       type: 'application/json',
     });
     const url = URL.createObjectURL(blob);
