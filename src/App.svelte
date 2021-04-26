@@ -20,7 +20,7 @@
   onMount(async () => {
     // Load our pages from browser storage
     $pages = await getPagesFromBrowser($pages);
-      await tick();
+    await tick();
     // Claculate the amount we've scrolled
     scrollY = innerHeight * currentViewport;
   });

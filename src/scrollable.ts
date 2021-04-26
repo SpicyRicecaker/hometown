@@ -1,6 +1,6 @@
 // This file calculates powerpoint slide # according to our current scroll position,
 // and returns it to `App.svelte` in order for it to update the dot respective to the powerpoint #
-// 
+//
 // Keep in mind that scroll position affects => powerpoint #, but *not* the other way around
 // in other words, this file is only a tracker, for the purposes of updating the powerpoint # metric.
 // Having both values tied to each other was just too buggy for me lol
@@ -40,7 +40,7 @@ export const scrollable = (node: any, currentViewport: number) => {
 
     // If we're not handling any ticking events
     if (!ticking) {
-      // Setup a request animation frame loop 
+      // Setup a request animation frame loop
       window.requestAnimationFrame(() => {
         // Handle the scroll
         handleScroll(lastKnownScrollPosition);

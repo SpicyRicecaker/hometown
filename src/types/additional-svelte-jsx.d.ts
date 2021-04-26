@@ -9,6 +9,6 @@ declare namespace svelte.JSX {
     // If you want to use myCustomAttribute={..} (note: all lowercase)
     // mycustomattribute?: any;
     // You can replace any with something more specific if you like
-    onscrollchange?: (event:any) => any;
+    onscrollchange?: (event: any) => any;
   }
 }

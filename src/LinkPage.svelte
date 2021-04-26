@@ -4,10 +4,12 @@
 
   import { editing, stockLink } from './stores';
 
-  const permaPush = () => {
+  // Pushes a link in link list
+  const pushElement = () => {
     links = [...links, stockLink()];
   };
 
+  // Removes a link from link list
   const removeElement = (i: number) => {
     links.splice(i, 1);
     links = links;
@@ -16,12 +18,14 @@
 
 {#each links as link, i}
   <div class="links">
+    <!-- In normal mode, show just the user assigned name for the website -->
     {#if !$editing}
       <a class="description" href={link.url}>
         <div>
           {link.description}
         </div>
       </a>
+      <!-- In edit mode, show description, link, delete, and add buttons for every link -->
     {:else}
       <div class="description">
         <div>
@@ -41,8 +45,9 @@
   </div>
 {/each}
 
+<!-- In edit mode, create an extra link panel that when clicked, adds a new link -->
 {#if $editing}
-  <div class="links" on:click={permaPush}>
+  <div class="links" on:click={pushElement}>
     <div class="description">
       <div>+</div>
     </div>
