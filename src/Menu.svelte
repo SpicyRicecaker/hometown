@@ -1,4 +1,6 @@
 <script>
+  // Idea: Menu is a module that's hidden by default. On click, we'll literally just insert it into the dom and animate it
+  // It must be less expensive than loading it everytime the user tries to quickload something
   import MenuOptions from './MenuOptions.svelte';
   let visible: boolean = false;
 
@@ -77,6 +79,7 @@
   }
 
   .gear {
+    user-select: none;
     &:hover {
       cursor: pointer;
     }
