@@ -20,7 +20,7 @@
   <div class="links">
     <!-- In normal mode, show just the user assigned name for the website -->
     {#if !$editing}
-      <a class="description" href={link.url}>
+      <a class="description" draggable="false" href={link.url}>
         <div>
           {link.description}
         </div>
@@ -59,7 +59,7 @@
     display: flex;
     flex-direction: column;
 
-    & .description {
+    & > .description {
       transition: 300ms;
 
       font-size: 2rem;
@@ -76,6 +76,7 @@
         align-self: center;
         justify-self: center;
         word-break: break-all;
+        user-select: none;
       }
     }
   }
@@ -84,6 +85,5 @@
     text-decoration: none;
     color: #d4be98;
     outline: none;
-    transition: 300ms;
   }
 </style>

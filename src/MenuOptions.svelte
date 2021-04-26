@@ -108,6 +108,9 @@
 
     // Make sure that we're able to click on them
     pointer-events: auto;
+    
+    // No select
+    user-select: none;
   }
 
   // input[type='file'] hidden for stylistic purposes
