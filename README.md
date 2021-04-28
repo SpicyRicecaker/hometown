@@ -13,31 +13,30 @@ npm install -g pnpm
 ```
 
 Install dependencies
+
 ```
 pnpm install
 ```
 
 Build!
+
 ```
 pnpm build
 ```
 
 ## TODO
 
-- [x] Snap scroll multiple pages?
-  - E.g. snap up for search engines, snap down for music
-- [x] **Separate default layout with custom user layouts**
-  - ~~[ ] Create indexedDB to store config~~
-  - [x] using extension storage instead
 - "Edit" mode
-  - [x] Cog icon that opens absolute-positioned side menu, with edit button
-  - [x] In edit mode, create a temporary grid component on each level
-  - [x] When user clicks this temporary grid, add a real grid
+  - [ ] Stabilize menu
+  - [ ] Drag pages and links
+    - It's exceedingly annoying to re-edit links as of now
   - [ ] Change default page
+    - Should be able to just add position absolute button to every page, then update default page by that index
+    - stored in separate `user` variable? or should we have individual sublinks?
+    - how in the world do we migrate data? yikers
 - [x] Sublinks for major links
   - [ ] Animated moving up to halfway in the opposite direction of the major grid
-  - [x] Use `<svelte:self>`, this means actually making separate components
-    - [ ] Each layer needs to have an orientation of up-down or left-right
+  - [ ] Each link or page needs to have an orientation of up-down or left-right
 - [ ] RAIN
   - [ ] Rain via canvas + rust wasm
 
