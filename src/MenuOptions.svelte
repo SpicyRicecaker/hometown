@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { pages, sync } from './stores';
   import { editing } from './stores';
 

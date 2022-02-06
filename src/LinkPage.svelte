@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import type { Link } from './types/link';
   export let links: Link[];
 

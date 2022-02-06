@@ -1,6 +1,6 @@
-<script>
-  import { pages, editing } from './stores';
-  import LinkPage from './LinkPage.svelte';
+<script lang="ts">
+  import { pages, editing } from "./stores";
+  import LinkPage from "./LinkPage.svelte";
 
   // Removes a page from the list of pages
   const removeElement = (i: number) => {
@@ -12,9 +12,9 @@
 <!-- Loop through every page -->
 {#each $pages as page, i}
   <div class="pages">
-    <LinkPage bind:links={page.links} />
+    <LinkPage bind:links="{page.links}" />
     {#if $editing}
-      <div class="x" on:click={() => removeElement(i)}>×</div>
+      <div class="x" on:click="{() => removeElement(i)}">×</div>
     {/if}
   </div>
 {/each}

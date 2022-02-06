@@ -1,7 +1,7 @@
 // Import writable store from svelte library
 import { writable } from 'svelte/store';
 // Import browser store, given to web extensions
-import { browser } from 'webextension-polyfill-ts';
+import browser from 'webextension-polyfill';
 // Import page type
 import type { Page, Link } from './types/link';
 

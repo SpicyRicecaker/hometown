@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   // onMount from svelte library runs when the component is first visible on DOM
   import { onMount, tick } from 'svelte';
   // Our main components of the program
